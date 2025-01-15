@@ -661,3 +661,18 @@ class CompositeBasisMixin:
             )._input_shape_product,
         )
         return self
+
+    def __repr__(self, n=0):
+        # number of nested composite bases
+        n += 1
+        tab = "    "
+        try:
+            basis1 = self.basis1.__repr__(n=n)
+        except TypeError:
+            basis1 = self.basis1
+        try:
+            basis2 = self.basis2.__repr__(n=n)
+        except TypeError:
+            basis2 = self.basis2
+        rep = f"{self.__class__.__name__}(\n{n*tab}basis1={basis1},\n{n*tab}basis2={basis2},\n{(n-1)*tab})"
+        return rep
