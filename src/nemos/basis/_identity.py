@@ -151,7 +151,7 @@ class HistoryBasis(Basis, AtomicBasisMixin):
         if sample_pts.ndim != 1:
             raise ValueError("`_evaluate` for HistoryBasis allows 1D input only.")
         # this is called by set kernel.
-        return np.eye(np.asarray(sample_pts).shape[0], self.n_basis_funcs)
+        return np.eye(np.asarray(sample_pts).shape[0], self._n_basis_funcs)
 
     def evaluate_on_grid(self, n_samples: int) -> Tuple[NDArray, NDArray]:
         """Evaluate the basis set on a grid of equi-spaced sample points.
@@ -171,7 +171,7 @@ class HistoryBasis(Basis, AtomicBasisMixin):
         self._check_input_dimensionality((n_samples,))
         if self._has_zero_samples((n_samples,)):
             raise ValueError("All sample counts provided must be greater than zero.")
-        return np.linspace(0, 1, n_samples), np.eye(n_samples, self.n_basis_funcs)
+        return np.linspace(0, 1, n_samples), np.eye(n_samples, self._n_basis_funcs)
 
     def _check_n_basis_min(self):
         """No checks necessary."""

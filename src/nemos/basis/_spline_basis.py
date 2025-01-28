@@ -111,7 +111,7 @@ class SplineBasis(Basis, AtomicBasisMixin, abc.ABC):
             If the percentiles or order values are not within the valid range.
         """
         # Determine number of interior knots.
-        num_interior_knots = self.n_basis_funcs - self.order
+        num_interior_knots = self._n_basis_funcs - self.order
         if is_cyclic:
             num_interior_knots += self.order - 1
 
@@ -136,7 +136,7 @@ class SplineBasis(Basis, AtomicBasisMixin, abc.ABC):
         ValueError
             If an insufficient number of basis element is requested for the basis type
         """
-        if self.n_basis_funcs < self.order:
+        if self._n_basis_funcs < self.order:
             raise ValueError(
                 f"{self.__class__.__name__} `order` parameter cannot be larger "
                 "than `n_basis_funcs` parameter."
@@ -257,7 +257,7 @@ class MSplineBasis(SplineBasis, abc.ABC):
                     i,
                     knot_locs,
                 )
-                for i in range(self.n_basis_funcs)
+                for i in range(self._n_basis_funcs)
             ],
             axis=1,
         )

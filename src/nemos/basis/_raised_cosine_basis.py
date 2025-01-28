@@ -159,7 +159,7 @@ class RaisedCosineBasisLinear(Basis, AtomicBasisMixin, abc.ABC):
         -------
             Peak locations of each basis element.
         """
-        return np.linspace(0, 1, self.n_basis_funcs)
+        return np.linspace(0, 1, self._n_basis_funcs)
 
     def evaluate_on_grid(self, n_samples: int) -> Tuple[NDArray, NDArray]:
         """Evaluate the basis set on a grid of equi-spaced sample points.
@@ -190,7 +190,7 @@ class RaisedCosineBasisLinear(Basis, AtomicBasisMixin, abc.ABC):
         ValueError
             If n_basis_funcs < 2.
         """
-        if self.n_basis_funcs < 2:
+        if self._n_basis_funcs < 2:
             raise ValueError(
                 f"Object class {self.__class__.__name__} requires >= 2 basis elements. "
                 f"{self.n_basis_funcs} basis elements specified instead"
@@ -326,7 +326,7 @@ class RaisedCosineBasisLog(RaisedCosineBasisLinear, abc.ABC):
         if self.enforce_decay_to_zero:
             # compute the last peak location such that the last
             # basis element decays to zero at the last sample.
-            last_peak = 1 - self.width / (self.n_basis_funcs + self.width - 1)
+            last_peak = 1 - self.width / (self._n_basis_funcs + self.width - 1)
         else:
             last_peak = 1
         return np.linspace(0, last_peak, self.n_basis_funcs)
